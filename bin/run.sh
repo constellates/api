@@ -155,7 +155,16 @@ host = $SCITRAN_RUNTIME_HOST
 port = $SCITRAN_RUNTIME_PORT
 ssl_pem=$SCITRAN_RUNTIME_SSL_PEM
 
-[app:main]
+[composite:main]
+use = egg:Paste#cascade
+app1 = static
+app2 = api
+
+[app:static]
+use = egg:Paste#static
+document_root = static
+
+[app:api]
 paste.app_factory = api.api:app_factory
 EOF
 
